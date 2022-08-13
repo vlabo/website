@@ -6,7 +6,7 @@
     <description>Pendsv</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 Apr 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 14 Apr 2022 00:00:00 +0000</lastBuildDate>
     
     <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>The Evolution DNS</title>
       <link>/posts/the-evolution-dns/</link>
-      <pubDate>Thu, 28 Apr 2022 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 14 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>/posts/the-evolution-dns/</guid>
       <description>&lt;p&gt;This standard has existed for a long time in fact the first RFC about DNS was published in 1987. But a lot has changed from the first publication. The original idea was great, it has work and it continues to work for more then 30 years with the ridiculous internet growth but it has some limitations which were solved with more recent standards.&lt;/p&gt;
