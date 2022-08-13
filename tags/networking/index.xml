@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>networking on Pendsv</title>
+    <link>/tags/networking/</link>
+    <description>Pendsv (networking)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 28 Apr 2022 00:00:00 +0000</lastBuildDate>
+    
+    <atom:link href="/tags/networking/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Evolution DNS</title>
+      <link>/posts/the-evolution-dns/</link>
+      <pubDate>Thu, 28 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/the-evolution-dns/</guid>
+      <description>&lt;p&gt;This standard has existed for a long time in fact the first RFC about DNS was published in 1987. But a lot has changed from the first publication. The original idea was great, it has work and it continues to work for more then 30 years with the ridiculous internet growth but it has some limitations which were solved with more recent standards.&lt;/p&gt;
+&lt;h2 id=&#34;before-dns&#34; &gt;Before DNS
+&lt;span&gt;
+    &lt;a href=&#34;#before-dns&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Before dns was release and adopted host name to address mappings were maintained by the Network Information Center (NIC) in a single file (HOSTS.TXT) which was FTPed by all hosts.&lt;/p&gt;
+&lt;h2 id=&#34;first-dns-standard&#34; &gt;First DNS Standard
+&lt;span&gt;
+    &lt;a href=&#34;#first-dns-standard&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;In the first version of dns when sending a query the data is transmitted over UDP this is done mainly for performance reasons. UDP is fast and with small size packets like DNS the packet can fit in single MTU in most cases.&lt;/p&gt;
+&lt;p&gt;Later DNS over TCP was added and a lot of server provided it as an optional dependency. This provides foundation support for DNSSEC for DoT.&lt;/p&gt;
+&lt;p&gt;Still even the standard was made long time ago in most case we still use UDP due to lack of software support or lack of understanding.&lt;/p&gt;
+&lt;p&gt;You may ask why should we change this when it works? If you ask this you are right and wrong. Yes in some cases is okay to use this standard if you have full control of the network but if you don’t the security and privacy aspect are more important then the hardly noticeable performance gains.&lt;/p&gt;
+&lt;h2 id=&#34;dnssec&#34; &gt;DNSSEC
+&lt;span&gt;
+    &lt;a href=&#34;#dnssec&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;As you may have guest DNSSEC was added to enhance the security, in &lt;a href=&#34;https://datatracker.ietf.org/doc/html/rfc4033&#34;&gt;RFC-4033&lt;/a&gt; says:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The DNS security extensions provide origin authentication and integrity protection for DNS data, as well as a means of public key
+distribution.  These extensions do not provide confidentiality.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;That means DNSSEC provides validation that nobody is messing with the dns query by adding cryptographic signatures to DNS records. This solves almost all dns attacks and you can be sure that nobody messed with the response that you get from the server. When using DNSSEC use of TCP is recommended since this increases the query size and UDP may not be so reliable.&lt;/p&gt;
+&lt;p&gt;But still this does not provide encryption so anyone that can read the request can parse the query. This does not help at all with the privacy problem.&lt;/p&gt;
+&lt;h2 id=&#34;dot-and-doh&#34; &gt;DoT and DoH
+&lt;span&gt;
+    &lt;a href=&#34;#dot-and-doh&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;Does two standards solve all of the security and privacy problems from before.&lt;/p&gt;
+&lt;p&gt;DoT (DNS over TLS) is just a normal dns over tcp but all the data is encrypted with TLS. It usually uses 453 port.&lt;/p&gt;
+&lt;p&gt;DoH (DNS over HTTPS) is dns query passed through HTTPS connection. It uses the standard 443 https port.&lt;/p&gt;
+&lt;p&gt;Both are end-to-end encrypted no need for additional checks or DNSSEC.&lt;/p&gt;
+&lt;p&gt;This is great we have a new standards that has great security, privacy and with proper caching there will be no performance difference. The problem is as every other networking standard, the adoption is slow. Most of the mobile devices that run Android or IOS have option for DoT or DoH as well as most modern browsers but it’s almost never the default option.&lt;/p&gt;
+&lt;p&gt;Unless you have a router that support encrypted dns and can act as a DNS server (which is the easiest option) I would suggest checking all you devices settings and setup DoT or DoH.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/all_dns.webp&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Here is how to set it up:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.quad9.net/service/service-addresses-and-features&#34;&gt;Quad9&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://developers.cloudflare.com/1.1.1.1/encryption/&#34;&gt;Cloudflare&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://adguard-dns.io/en/public-dns.html&#34;&gt;AdGuard&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://applied-privacy.net/services/dns/&#34;&gt;Foundation of Applied privacy&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://nextdns.io/&#34;&gt;NextDNS&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;You may have notices why do we have DoH when DoT has the same benefits and is more efficient (it dose not need to send the http headers). Well the reason is that DoH uses the same port as any HTTP app and sys admins can block the port 53 and 453 but cannot block 443 without making the internet unusable. Also it provide better privacy when you make a dns request over DoT for example the ISP can’t see what DNS request you are making but it can see that you are making one and you are encrypting it but if you use DoH the ISP will see a regular HTTPS request and it wont know that it is a DNS request.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>A new DNS standard?</title>
+      <link>/posts/a-new-dns-standard/</link>
+      <pubDate>Wed, 13 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/a-new-dns-standard/</guid>
+      <description>&lt;p&gt;This article is a continuation of my &lt;a href=&#34;https://pendsv.substack.com/p/the-evolution-dns?utm_source=substack&amp;amp;utm_campaign=post_embed&amp;amp;utm_medium=web&#34;&gt;previous one&lt;/a&gt;, if you want to know a brief history of DNS I recommend checking it out.&lt;/p&gt;
+&lt;h2 id=&#34;dns-over-quic-doq&#34; &gt;DNS over QUIC (DoQ)
+&lt;span&gt;
+    &lt;a href=&#34;#dns-over-quic-doq&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;This is a new fresh standard of DNS so fresh that in the time I’m writing this the &lt;a href=&#34;https://datatracker.ietf.org/doc/rfc9250/&#34;&gt;RFC&lt;/a&gt; is still in draft.&lt;/p&gt;
+&lt;p&gt;DoQ is the same thing as DoT but the transport protocol is QUIC not TCP and you get all the performance benefits from it, that is all there is to it (that was quick). If you are not familiar with QUIC protocol you can continue reading, this is going to be the rest of the article.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Some DNS providers that support DoQ: &lt;a href=&#34;https://adguard.com/en/welcome.html&#34;&gt;Adguard&lt;/a&gt;, &lt;a href=&#34;https://my.nextdns.io/&#34;&gt;NextDNS&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;quic-quick-udp-internet-connections&#34; &gt;QUIC (Quick UDP Internet Connections)
+&lt;span&gt;
+    &lt;a href=&#34;#quic-quick-udp-internet-connections&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;This new protocol was invented by Jim Roskind a Google engeener and it has been used in Google projects few years before it has been added to the new HTTP/3 standard. It is a replacement for TCP but design in a way to fit better the modern technologies.&lt;/p&gt;
+&lt;p&gt;The main difference with TCP is that in QUIC encryption is embedded in the protocol. Compared to TCP first you need to create a connection and have a TCP handshake and then establish a TLS handshake but in QUIC establishing the connection and sharing the public keys between the parties are in the same transaction.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/tcp_vs_quic.webp&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Also in QUIC lost connection can be reestablished with little to no overhead. For example if you switch from mobile data to WiFi on your phone with TCP all the connection need to be reestablished, with QUIC both the server and the client have each others public certificates so the server just needs to know the client new IP address. This is called 0-RTT and may have security risks in some applications but not in DNS.&lt;/p&gt;
+&lt;p&gt;QUIC has more benefits related to the new HTTP/3 standard but for the scope of this DoQ there is not much left. If you want to learn more about QUIC and HTTP/3 you can check the references.&lt;/p&gt;
+&lt;h2 id=&#34;doh-with-quic&#34; &gt;DoH with QUIC
+&lt;span&gt;
+    &lt;a href=&#34;#doh-with-quic&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h2&gt;&lt;p&gt;The beauty of the network protocol stack is that you can use DoH with QUIC, without needing a new standard for it, just use it over HTTP/3 since QUIC is the base of HTTP/3. As you may already know DoH is passing dns query over https the main benefit of that is that https is using the port 443 witch is almost never block by the sysadmins.&lt;/p&gt;
+&lt;h3 id=&#34;references&#34; &gt;References:
+&lt;span&gt;
+    &lt;a href=&#34;#references&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/QUIC&#34;&gt;https://en.wikipedia.org/wiki/QUIC&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://datatracker.ietf.org/doc/rfc9250/&#34;&gt;https://datatracker.ietf.org/doc/rfc9250/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://blog.cloudflare.com/the-road-to-quic/&#34;&gt;https://blog.cloudflare.com/the-road-to-quic/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
