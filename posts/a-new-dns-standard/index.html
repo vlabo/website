@@ -199,20 +199,7 @@ DoQ is the same thing as DoT but the transport protocol is QUIC not TCP and you 
     </a>
 </span>
 </h2><p>The beauty of the network protocol stack is that you can use DoH with QUIC, without needing a new standard for it, just use it over HTTP/3 since QUIC is the base of HTTP/3. As you may already know DoH is passing dns query over https the main benefit of that is that https is using the port 443 witch is almost never block by the sysadmins.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">// SubmitDNSCheckDomain submits a subdomain for the dns check.
-</span><span style="color:#75715e"></span>func <span style="color:#a6e22e">SubmitDNSCheckDomain</span>(subdomain string) (respondWith net.IP) {
-	<span style="color:#75715e">// Submit queried domain.
-</span><span style="color:#75715e"></span>	select {
-	<span style="color:#66d9ef">case</span> dnsCheckReceivedDomain <span style="color:#f92672">&lt;-</span> subdomain:
-	<span style="color:#66d9ef">default</span><span style="color:#f92672">:</span>
-	}
-
-	<span style="color:#75715e">// Return the answer.
-</span><span style="color:#75715e"></span>	dnsCheckAnswerLock.Lock()
-	defer dnsCheckAnswerLock.Unlock()
-	<span style="color:#66d9ef">return</span> dnsCheckAnswer
-}
-</code></pre></div><h3 id="references" >References:
+<h3 id="references" >References:
 <span>
     <a href="#references">
         <svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/></svg>
