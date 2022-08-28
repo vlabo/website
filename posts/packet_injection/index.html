@@ -176,9 +176,9 @@ The official Microsoft documentation is not complete and they are many edge case
 </span>
 </h1><p>Those are the functions that I will focus on.
 First lets see an example how they are used.</p>
-<p><a href="https://github.com/safing/portmaster-windows-kext/blob/master/pm_kext/src/pm_callouts.c#L578-L621">Here is an example how to generate a TCP RST packet</a>. I will not go into details about the contents of the packet but about this function <a href="https://github.com/safing/portmaster-windows-kext/blob/master/pm_kext/src/pm_callouts.c#L201-L230">inject_packet</a>. If you are familiar with the IP address model you will immediately see something weird. We are checking if it&rsquo;s a loopback and if is then we always use inject send even for incoming packets?
+<p><a href="https://github.com/safing/portmaster-windows-kext/blob/master/pm_kext/src/pm_callouts.c#L578-L621">Here is an example how to generate a TCP RST packet</a>. I will not go into details about the contents of the packet but about this function <a href="https://github.com/safing/portmaster-windows-kext/blob/master/pm_kext/src/pm_callouts.c#L201-L230">inject_packet</a>. If you are familiar with the IP address model you will immediately see something weird. We are checking for loopback addresses and we always use inject send in that case even for incoming packets?
 This is just one example of <strong>UNDOCUMENTED</strong> special cases that we have to find by trial and error.
-After playing with does two functions for a few weeks here is my list of weird things that I found.</p>
+After playing with does two functions for a few weeks I have compiled a list of weird things.</p>
 <h3 id="data-not-accepted" >Data not accepted
 <span>
     <a href="#data-not-accepted">
@@ -200,7 +200,7 @@ After playing with does two functions for a few weeks here is my list of weird t
     </a>
 </span>
 </h3><p>So you managed to generate your packet and the inject function returns status success but the application did not receive it. First toughs that comes to my mind is open Wireshark and inspect the packets, but for some reason Wireshark does not show the packet that was just injected.</p>
-<p>Don&rsquo;t panic your packet is injected it always get injected when the return code is success. If it&rsquo;s outbound it will go thought the NIC and you will see it in Wireshark but if it is inbound you well see it in the loopback interface. (this took me a while to figure out)</p>
+<p>Don&rsquo;t panic your packet is injected it always gets injected when the return code is success. If it&rsquo;s outbound it will go thought the NIC and you will see it in Wireshark but if it is inbound you well see it in the loopback interface. (this took me a while to figure out)</p>
 <p>This is a great way to debug and see why it is not received by the application.</p>
 <h3 id="inbound-icmp-is-blocked-by-the-firewall-by-default" >Inbound ICMP is blocked by the firewall by default
 <span>
