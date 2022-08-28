@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>packet on Pending Supervision</title>
+    <link>/tags/packet/</link>
+    <description>Pending Supervision (packet)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 28 Aug 2022 00:00:00 +0000</lastBuildDate>
+    
+    <atom:link href="/tags/packet/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Packet injection in Windows</title>
+      <link>/posts/packet_injection/</link>
+      <pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/packet_injection/</guid>
+      <description>&lt;p&gt;My inspiration for this blog post is that there are hardly any material for how exactly to inject packets from a windows driver.
+The official Microsoft documentation is not complete and they are many edge cases that makes you wonder for days why it is not working.&lt;/p&gt;
+&lt;h1 id=&#34;fwpsinjectnetworksendasync-and-fwpsinjectnetworkreceiveasync&#34; &gt;FwpsInjectNetworkSendAsync and FwpsInjectNetworkReceiveAsync
+&lt;span&gt;
+    &lt;a href=&#34;#fwpsinjectnetworksendasync-and-fwpsinjectnetworkreceiveasync&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h1&gt;&lt;p&gt;Those are the functions that I will focus on.
+First lets see an example how they are used.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/safing/portmaster-windows-kext/blob/master/pm_kext/src/pm_callouts.c#L578-L621&#34;&gt;Here is an example how to generate a TCP RST packet&lt;/a&gt;. I will not go into details about the contents of the packet but about this function &lt;a href=&#34;https://github.com/safing/portmaster-windows-kext/blob/master/pm_kext/src/pm_callouts.c#L201-L230&#34;&gt;inject_packet&lt;/a&gt;. If you are familiar with the IP address model you will immediately see something weird. We are checking if it&amp;rsquo;s a loopback and if is then we always use inject send even for incoming packets?
+This is just one example of &lt;strong&gt;UNDOCUMENTED&lt;/strong&gt; special cases that we have to find by trial and error.
+After playing with does two functions for a few weeks here is my list of weird things that I found.&lt;/p&gt;
+&lt;h3 id=&#34;data-not-accepted&#34; &gt;Data not accepted
+&lt;span&gt;
+    &lt;a href=&#34;#data-not-accepted&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;If you get a &lt;a href=&#34;https://errorco.de/win32/ntstatus-h/status_objectid_exists/0xc000022b/&#34;&gt;STATUS_DATA_NOT_ACCEPTED&lt;/a&gt; from the &lt;code&gt;completionFn&lt;/code&gt; callback (second from last argument) it is probably invalid packet double check the building of the packet. Not really a weird use case but the error is not very clear.&lt;/p&gt;
+&lt;h3 id=&#34;localhost-packets-special-case&#34; &gt;Localhost packets special case
+&lt;span&gt;
+    &lt;a href=&#34;#localhost-packets-special-case&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;All localhost packets need to handled with &lt;code&gt;FwpsInjectNetworkSend&lt;/code&gt;. Inject receive will probably not work.&lt;/p&gt;
+&lt;h3 id=&#34;missing-packet-after-inject&#34; &gt;Missing packet after inject?
+&lt;span&gt;
+    &lt;a href=&#34;#missing-packet-after-inject&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;So you managed to generate your packet and the inject function returns status success but the application did not receive it. First toughs that comes to my mind is open Wireshark and inspect the packets, but for some reason Wireshark does not show the packet that was just injected.&lt;/p&gt;
+&lt;p&gt;Don&amp;rsquo;t panic your packet is injected it always get injected when the return code is success. If it&amp;rsquo;s outbound it will go thought the NIC and you will see it in Wireshark but if it is inbound you well see it in the loopback interface. (this took me a while to figure out)&lt;/p&gt;
+&lt;p&gt;This is a great way to debug and see why it is not received by the application.&lt;/p&gt;
+&lt;h3 id=&#34;inbound-icmp-is-blocked-by-the-firewall-by-default&#34; &gt;Inbound ICMP is blocked by the firewall by default
+&lt;span&gt;
+    &lt;a href=&#34;#inbound-icmp-is-blocked-by-the-firewall-by-default&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;If you don&amp;rsquo;t want to change the firewall rules there is a really nice workaround to it that was pointed from a colleague of mine. Just send the icmp packet to the loopback address, this will bypass the firewall and if the ICMP packet is valid it will be processed.&lt;/p&gt;
+&lt;h3 id=&#34;some-protocols-are-not-fully-implemented&#34; &gt;Some protocols are not fully implemented.
+&lt;span&gt;
+    &lt;a href=&#34;#some-protocols-are-not-fully-implemented&#34;&gt;
+        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
+    &lt;/a&gt;
+&lt;/span&gt;
+&lt;/h3&gt;&lt;p&gt;I don&amp;rsquo;t have the complete list it&amp;rsquo;s just something that you should probably keep in mind.
+The only not implemented packet that I found was ICMP &lt;code&gt;Destination unreachable (Host administratively prohibited)&lt;/code&gt;. When I tried to send it it just accepts it and nothing happens.&lt;/p&gt;
+&lt;p&gt;I ended on this conclusion because windows kernel was accepting even invalid packets with this error code, which was not happening for example in ICMP &lt;code&gt;Destination unreachable (Port unreachable)&lt;/code&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;I hope my list of edge cases saves you some time when you ever need to use those functions.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/fwpsk/nf-fwpsk-fwpsinjectnetworksendasync0&#34;&gt;FwpsInjectNetworkSendAsync&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/fwpsk/nf-fwpsk-fwpsinjectnetworkreceiveasync0&#34;&gt;FwpsInjectNetworkReceiveAsync&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

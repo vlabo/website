@@ -2,6 +2,36 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>/tags/icmp/</loc>
+    <lastmod>2022-08-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/inject/</loc>
+    <lastmod>2022-08-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/networking/</loc>
+    <lastmod>2022-08-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/packet/</loc>
+    <lastmod>2022-08-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/posts/packet_injection/</loc>
+    <lastmod>2022-08-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/</loc>
+    <lastmod>2022-08-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/posts/</loc>
+    <lastmod>2022-08-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2022-08-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/wdk/</loc>
+    <lastmod>2022-08-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/windows/</loc>
+    <lastmod>2022-08-28T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/posts/a-new-dns-standard/</loc>
     <lastmod>2022-04-28T00:00:00+00:00</lastmod>
   </url><url>
@@ -17,19 +47,7 @@
     <loc>/tags/dot/</loc>
     <lastmod>2022-04-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/networking/</loc>
-    <lastmod>2022-04-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/</loc>
-    <lastmod>2022-04-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/posts/</loc>
-    <lastmod>2022-04-28T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/tags/quic/</loc>
-    <lastmod>2022-04-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
     <lastmod>2022-04-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/doh/</loc>
