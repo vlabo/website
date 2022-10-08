@@ -177,7 +177,7 @@ The official Microsoft documentation is not complete and they are many edge case
 </h1><p>Those are the functions that I will focus on.
 First lets see an example how they are used.</p>
 <p>Take a look at the function <a href="https://github.com/safing/portmaster-windows-kext/blob/5ade7f01ccb930d99bb90cde091e634ef4748298/pm_kext/src/pm_packet.c#L76-L108">injectPacket</a> I will not go in details of wht every function does but if you are familiar with the IP address model and you look in the second if statement you will immediately see something weird. We are checking for loopback addresses and we always use inject send in that case even for incoming packets?
-This is just one example of ** NOT DOCUMENTED** special cases that we have to find by trial and error.
+This is just one example of <strong>NOT DOCUMENTED</strong> special cases that we have to find by trial and error.
 After playing with does two functions for a few weeks I have compiled a list of weird things.</p>
 <h3 id="data-not-accepted" >Data not accepted
 <span>
