@@ -81,8 +81,8 @@
 &lt;/span&gt;
 &lt;/h2&gt;&lt;p&gt;In the first version of dns when sending a query the data is transmitted over UDP this is done mainly for performance reasons. UDP is fast and with small size packets like DNS the packet can fit in single MTU in most cases.&lt;/p&gt;
 &lt;p&gt;Later DNS over TCP was added and a lot of server provided it as an optional dependency. This provides foundation support for DNSSEC for DoT.&lt;/p&gt;
-&lt;p&gt;Still even the standard was made long time ago in most case we still use UDP due to lack of software support or lack of understanding.&lt;/p&gt;
-&lt;p&gt;You may ask why should we change this when it works? If you ask this you are right and wrong. Yes in some cases is okay to use this standard if you have full control of the network but if you don’t the security and privacy aspect are more important then the hardly noticeable performance gains.&lt;/p&gt;
+&lt;p&gt;Still even the standard was made long time ago in most case we still use DNS over UDP due to lack of software support or lack of knowledge for alternatives.&lt;/p&gt;
+&lt;p&gt;Yes in some cases is okay to use this standard if you need and have full control over the network for example managing corporate network. But in any other case the security and privacy aspect are more important then the hardly noticeable performance gains.&lt;/p&gt;
 &lt;h2 id=&#34;dnssec&#34; &gt;DNSSEC
 &lt;span&gt;
     &lt;a href=&#34;#dnssec&#34;&gt;
@@ -106,7 +106,7 @@ distribution.  These extensions do not provide confidentiality.&lt;/p&gt;
 &lt;p&gt;DoT (DNS over TLS) is just a normal dns over tcp but all the data is encrypted with TLS. It usually uses 453 port.&lt;/p&gt;
 &lt;p&gt;DoH (DNS over HTTPS) is dns query passed through HTTPS connection. It uses the standard 443 https port.&lt;/p&gt;
 &lt;p&gt;Both are end-to-end encrypted no need for additional checks or DNSSEC.&lt;/p&gt;
-&lt;p&gt;This is great we have a new standards that has great security, privacy and with proper caching there will be no performance difference. The problem is as every other networking standard, the adoption is slow. Most of the mobile devices that run Android or IOS have option for DoT or DoH as well as most modern browsers but it’s almost never the default option.&lt;/p&gt;
+&lt;p&gt;This is great we have a new standards that has great security, privacy and with proper caching there will be no performance difference. The problem is as every other networking standard, the adoption is slow. Most of the mobile devices that run Android or IOS have option for DoT or DoH and most modern browsers but it’s almost never the default option.&lt;/p&gt;
 &lt;p&gt;Unless you have a router that support encrypted dns and can act as a DNS server (which is the easiest option) I would suggest checking all you devices settings and setup DoT or DoH.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;/img/all_dns.webp&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Here is how to set it up:&lt;/p&gt;
@@ -116,6 +116,7 @@ distribution.  These extensions do not provide confidentiality.&lt;/p&gt;
 &lt;a href=&#34;https://applied-privacy.net/services/dns/&#34;&gt;Foundation of Applied privacy&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;https://nextdns.io/&#34;&gt;NextDNS&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;You may have notices why do we have DoH when DoT has the same benefits and is more efficient (it dose not need to send the http headers). Well the reason is that DoH uses the same port as any HTTP app and sys admins can block the port 53 and 453 but cannot block 443 without making the internet unusable. Also it provide better privacy when you make a dns request over DoT for example the ISP can’t see what DNS request you are making but it can see that you are making one and you are encrypting it but if you use DoH the ISP will see a regular HTTPS request and it wont know that it is a DNS request.&lt;/p&gt;
+&lt;p&gt;If you want easy to setup secure dns checkout &lt;a href=&#34;https://safing.io&#34;&gt;Portmaster&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     

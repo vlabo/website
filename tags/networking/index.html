@@ -76,7 +76,7 @@
     
 
     
-        <script src="/js/script.min.510c781c39dbb21b4c76d85c82e2bdf4689220adbb7cd61e49e9d293e442fb42.js" type="text/javascript" charset="utf-8" integrity="sha256-UQx4HDnbshtMdthcguK99GiSIK27fNYeSenSk&#43;RC&#43;0I="></script>
+        <script src="/js/script.min.74bf1a3fcf1af396efa4acf3e660e876b61a2153ab9cbe1893ac24ea6d4f94ee.js" type="text/javascript" charset="utf-8" integrity="sha256-dL8aP88a85bvpKzz5mDodrYaIVOrnL4Yk6wk6m1PlO4="></script>
     
 
 
@@ -89,7 +89,6 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/tags/networking/" />
-
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="networking"/>
@@ -167,8 +166,9 @@
 
     
         <div class="content post-summary p-summary">
-            My inspiration for this blog post is that there are hardly any material for how exactly to inject packets from a windows driver. The official Microsoft documentation is not complete and they are many edge cases that makes you wonder for days why it is not working.
-FwpsInjectNetworkSendAsync and FwpsInjectNetworkReceiveAsync     Those are the functions that I will focus on. First lets see an example how they are used.
+            My inspiration for this blog post is the lack of material for how exactly to inject packets from a windows driver. The official Microsoft documentation is not complete and they are many edge cases that makes you wonder for days why it is not working.
+After playing with does two functions for a few weeks I have compiled a list of weird things.
+Special cases of FwpsInjectNetworkSendAsync and FwpsInjectNetworkReceiveAsync Data not accepted.
         </div>
     
     
@@ -228,7 +228,7 @@ FwpsInjectNetworkSendAsync and FwpsInjectNetworkReceiveAsync     Those are the f
     
         <div class="content post-summary p-summary">
             This article is a continuation of my previous one, if you want to know a brief history of DNS I recommend checking it out.
-DNS over QUIC (DoQ)     This is a new fresh standard of DNS so fresh that in the time I’m writing this the RFC is still in draft.
+DNS over QUIC (DoQ) This is a new fresh standard of DNS so fresh that in the time I’m writing this the RFC is still in draft.
 DoQ is the same thing as DoT but the transport protocol is QUIC not TCP and you get all the performance benefits from it, that is all there is to it (that was quick).
         </div>
     
@@ -289,7 +289,7 @@ DoQ is the same thing as DoT but the transport protocol is QUIC not TCP and you 
     
         <div class="content post-summary p-summary">
             This standard has existed for a long time in fact the first RFC about DNS was published in 1987. But a lot has changed from the first publication. The original idea was great, it has work and it continues to work for more then 30 years with the ridiculous internet growth but it has some limitations which were solved with more recent standards.
-Before DNS     Before dns was release and adopted host name to address mappings were maintained by the Network Information Center (NIC) in a single file (HOSTS.
+Before DNS Before dns was release and adopted host name to address mappings were maintained by the Network Information Center (NIC) in a single file (HOSTS.
         </div>
     
     
@@ -348,7 +348,7 @@ Before DNS     Before dns was release and adopted host name to address mappings 
     <div class="common-footer-bottom">
         
         <div class="copyright">
-            <p>© Pendsv, 2022<br>
+            <p>© Pendsv, 2023<br>
             Powered by <a target="_blank" rel="noopener noreferrer" href="https://gohugo.io/">Hugo</a>, theme <a target="_blank" rel="noopener noreferrer" href="https://github.com/mitrichius/hugo-theme-anubis">Anubis</a>.<br>
             
             </p>  
